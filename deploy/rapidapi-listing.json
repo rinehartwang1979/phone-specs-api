@@ -1,0 +1,82 @@
+{
+  "name": "phone-specs-api",
+  "description": "Phone specifications API — search and compare smartphone specs",
+  "version": "1.0.0",
+  "category": "Data",
+  "logo": "https://img.icons8.com/color/96/smartphone.png",
+  "baseUrl": "https://your-app.railway.app",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/v1/search",
+      "description": "Search phones by keyword (brand, model, chipset, OS)",
+      "parameters": {
+        "q": {
+          "type": "string",
+          "required": true,
+          "description": "Search keyword"
+        },
+        "limit": {
+          "type": "integer",
+          "required": false,
+          "description": "Max results (1-100, default 20)"
+        },
+        "fields": {
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated fields to return (default: all)"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/specs/{phone_id}",
+      "description": "Get full specifications for a phone by ID",
+      "parameters": {
+        "phone_id": {
+          "type": "string",
+          "required": true,
+          "description": "Phone ID (e.g., apple_iphone16promax)"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/compare",
+      "description": "Compare two phones side-by-side",
+      "parameters": {
+        "id1": {
+          "type": "string",
+          "required": true,
+          "description": "First phone ID"
+        },
+        "id2": {
+          "type": "string",
+          "required": true,
+          "description": "Second phone ID"
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/brands",
+      "description": "List all brands with device counts"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/stats",
+      "description": "Database statistics"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "description": "Health check"
+    }
+  ],
+  "pricing": {
+    "free": "1000 requests/month",
+    "basic": "$9.99/month — 10,000 requests",
+    "pro": "$29.99/month — 50,000 requests",
+    "enterprise": "$99.99/month — unlimited"
+  }
+}
