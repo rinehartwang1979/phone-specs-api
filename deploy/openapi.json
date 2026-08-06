@@ -1,0 +1,277 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Phone Specs Search Compare",
+    "description": "\u7535\u5b50\u4ea7\u54c1\u89c4\u683c\u67e5\u8be2 API \u2014 \u624b\u673a\u54c1\u7c7b",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health",
+        "description": "\u5065\u5eb7\u68c0\u67e5",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/stats": {
+      "get": {
+        "summary": "Stats",
+        "description": "\u6570\u636e\u7edf\u8ba1",
+        "operationId": "stats_api_v1_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/brands": {
+      "get": {
+        "summary": "Brands",
+        "description": "\u54c1\u724c\u5217\u8868",
+        "operationId": "brands_api_v1_brands_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "get": {
+        "summary": "Search",
+        "description": "\u641c\u7d22\u624b\u673a \u2014 \u652f\u6301\u54c1\u724c\u3001\u578b\u53f7\u3001\u82af\u7247\u3001\u7cfb\u7edf\u7b49\u5173\u952e\u8bcd\n\n\u793a\u4f8b:\n    /api/v1/search?q=iPhone\n    /api/v1/search?q=Snapdragon\n    /api/v1/search?q=\u534e\u4e3a&fields=id,brand,model,chipset,price_range",
+        "operationId": "search_api_v1_search_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "\u641c\u7d22\u5173\u952e\u8bcd\uff08\u54c1\u724c/\u578b\u53f7/\u82af\u7247/\u7cfb\u7edf\uff09",
+              "title": "Q"
+            },
+            "description": "\u641c\u7d22\u5173\u952e\u8bcd\uff08\u54c1\u724c/\u578b\u53f7/\u82af\u7247/\u7cfb\u7edf\uff09"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "\u8fd4\u56de\u6570\u91cf",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "\u8fd4\u56de\u6570\u91cf"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "\u8fd4\u56de\u5b57\u6bb5\uff08\u9017\u53f7\u5206\u9694\uff09\uff0c\u9ed8\u8ba4\u5168\u90e8",
+              "title": "Fields"
+            },
+            "description": "\u8fd4\u56de\u5b57\u6bb5\uff08\u9017\u53f7\u5206\u9694\uff09\uff0c\u9ed8\u8ba4\u5168\u90e8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/specs/{phone_id}": {
+      "get": {
+        "summary": "Specs",
+        "description": "\u67e5\u8be2\u624b\u673a\u5b8c\u6574\u89c4\u683c\n\n\u793a\u4f8b:\n    /api/v1/specs/apple_iphone16promax",
+        "operationId": "specs_api_v1_specs__phone_id__get",
+        "parameters": [
+          {
+            "name": "phone_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Phone Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/compare": {
+      "get": {
+        "summary": "Compare",
+        "description": "\u5bf9\u6bd4\u4e24\u6b3e\u624b\u673a\u89c4\u683c\n\n\u793a\u4f8b:\n    /api/v1/compare?id1=apple_iphone16promax&id2=samsung_galaxys24ultra",
+        "operationId": "compare_api_v1_compare_get",
+        "parameters": [
+          {
+            "name": "id1",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "\u7b2c\u4e00\u6b3e\u624b\u673a ID",
+              "title": "Id1"
+            },
+            "description": "\u7b2c\u4e00\u6b3e\u624b\u673a ID"
+          },
+          {
+            "name": "id2",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "\u7b2c\u4e8c\u6b3e\u624b\u673a ID",
+              "title": "Id2"
+            },
+            "description": "\u7b2c\u4e8c\u6b3e\u624b\u673a ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://phone-specs-api-production.up.railway.app"
+    }
+  ]
+}
