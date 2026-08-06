@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "category": "Data",
   "logo": "https://img.icons8.com/color/96/smartphone.png",
-  "baseUrl": "https://your-app.railway.app",
+  "baseUrl": "https://phone-specs-api-production.up.railway.app",
   "endpoints": [
     {
       "method": "GET",
