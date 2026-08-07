@@ -163,3 +163,16 @@ new_phone = {
 ## License
 
 MIT
+
+---
+
+## Buy the Dataset
+
+Prefer the raw data? Get the complete CSV with all 130+ phones:
+
+- **Format**: CSV (UTF-8), 37 columns, ready for Excel / Pandas / SQL
+- **Fields**: brand, model, chipset, camera specs, battery, display, dimensions, and more
+- **Updates**: free updates for 12 months
+- **Price**: $9.99 one-time
+
+📧 Contact via [GitHub Issues](https://github.com/rinehartwang1979/phone-specs-api/issues) for bulk licensing.
