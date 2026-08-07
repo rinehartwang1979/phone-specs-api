@@ -80,11 +80,11 @@ a{color:#00d4aa}
 
 <div class="hero">
   <h1>Phone <span>Specs</span> API</h1>
-  <p>实时查询手机完整规格 — 130+ 款主流机型，24 品牌，38 字段结构化数据</p>
+  <p>实时查询手机完整规格 — 200 款机型，24 品牌，38 字段结构化数据</p>
   <span class="badge">FastAPI</span>
   <span class="badge">RapidAPI</span>
   <span class="badge">24 品牌</span>
-  <span class="badge">130+ 机型</span>
+  <span class="badge">200 机型</span>
 </div>
 
 <div class="container">
@@ -116,9 +116,26 @@ a{color:#00d4aa}
 
 <div class="cta">
   <h2>开始在 RapidAPI 上使用</h2>
-  <p style="color:#888;margin-bottom:16px">3 种定价方案，从免费到无限调用</p>
-  <a href="https://rapidapi.com" class="btn">查看定价</a>
-  <a href="/docs" class="btn btn-outline">API 文档</a>
+  <p style="color:#888;margin-bottom:16px">200 款手机完整规格，随时调用</p>
+  <div style="display:flex;justify-content:center;gap:24px;margin:24px 0;flex-wrap:wrap">
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:20px;min-width:200px">
+      <h3 style="color:#00d4aa;margin:0 0 8px">FREE</h3>
+      <div style="font-size:2rem;color:#fff;font-weight:700">$0<span style="font-size:1rem;color:#888">/月</span></div>
+      <p style="color:#888;font-size:.85rem">100 请求/天<br>速率限制<br>社区支持</p>
+    </div>
+    <div style="background:#1a1a1a;border:2px solid #00d4aa;border-radius:10px;padding:20px;min-width:200px">
+      <h3 style="color:#00d4aa;margin:0 0 8px">PRO</h3>
+      <div style="font-size:2rem;color:#fff;font-weight:700">$19.99<span style="font-size:1rem;color:#888">/月</span></div>
+      <p style="color:#888;font-size:.85rem">5,000 请求/月<br>无速率限制<br>优先支持</p>
+    </div>
+    <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:20px;min-width:200px">
+      <h3 style="color:#00d4aa;margin:0 0 8px">ULTRA</h3>
+      <div style="font-size:2rem;color:#fff;font-weight:700">$49.99<span style="font-size:1rem;color:#888">/月</span></div>
+      <p style="color:#888;font-size:.85rem">50,000 请求/月<br>白标使用<br>专属支持</p>
+    </div>
+  </div>
+  <a href="https://rapidapi.com/rinehartwang1979/api/phone-specs" class="btn">🚀 在 RapidAPI 订阅</a>
+  <a href="/docs" class="btn btn-outline">📖 API 文档</a>
 </div>
 
 <footer>
@@ -135,7 +152,7 @@ async function init() {
     document.getElementById('stat-total').textContent = h.record_count;
     document.getElementById('stat-version').textContent = h.version;
     document.getElementById('stat-updated').textContent = new Date(h.updated_at).toLocaleDateString('zh-CN');
-  } catch(e) { document.getElementById('stat-total').textContent = '130'; }
+  } catch(e) { document.getElementById('stat-total').textContent = '200'; }
 
   try {
     const r = await fetch('/api/v1/brands');
