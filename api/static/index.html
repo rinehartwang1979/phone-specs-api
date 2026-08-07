@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phone Specs API — 手机规格查询</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#e0e0e0;line-height:1.6}
+.hero{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);padding:80px 20px;text-align:center}
+.hero h1{font-size:2.5rem;color:#fff;margin-bottom:12px}
+.hero h1 span{color:#00d4aa}
+.hero p{font-size:1.15rem;color:#a0a0c0;max-width:600px;margin:0 auto 24px}
+.badge{display:inline-block;background:#00d4aa20;color:#00d4aa;padding:6px 16px;border-radius:20px;font-size:.85rem;margin:4px}
+.container{max-width:960px;margin:0 auto;padding:40px 20px}
+.search-box{display:flex;gap:10px;margin:24px 0}
+.search-box input{flex:1;padding:14px 18px;border:2px solid #333;border-radius:8px;background:#1a1a1a;color:#fff;font-size:1rem}
+.search-box input:focus{border-color:#00d4aa;outline:none}
+.search-box button{padding:14px 28px;background:#00d4aa;color:#000;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .2s}
+.search-box button:hover{background:#00ffcc}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:32px 0}
+.stat-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:24px;text-align:center}
+.stat-card .num{font-size:2.2rem;font-weight:800;color:#00d4aa}
+.stat-card .label{color:#888;margin-top:4px}
+.results{margin-top:24px}
+.phone-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:20px;margin-bottom:12px;transition:all .2s}
+.phone-card:hover{border-color:#00d4aa}
+.phone-card h3{color:#fff;margin-bottom:8px}
+.phone-card h3 .brand{color:#00d4aa}
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;font-size:.9rem}
+.spec-item{color:#888}
+.spec-item strong{color:#ccc;margin-right:6px}
+.endpoints h2{margin:32px 0 16px;color:#fff}
+.endpoint{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:16px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.method{background:#00d4aa;color:#000;padding:4px 10px;border-radius:4px;font-weight:700;font-size:.8rem}
+.path{font-family:monospace;color:#fff;font-size:.9rem;flex:1}
+.desc{color:#888;font-size:.85rem}
+.cta{text-align:center;padding:40px 20px;background:#1a1a2e;margin-top:40px}
+.cta h2{color:#fff;margin-bottom:12px}
+.cta .btn{display:inline-block;padding:16px 40px;background:#00d4aa;color:#000;font-weight:700;border-radius:8px;text-decoration:none;font-size:1.1rem;transition:all .2s;margin:8px}
+.cta .btn:hover{background:#00ffcc}
+.cta .btn-outline{background:transparent;border:2px solid #00d4aa;color:#00d4aa}
+footer{text-align:center;padding:20px;color:#555;font-size:.85rem}
+a{color:#00d4aa}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Phone <span>Specs</span> API</h1>
+  <p>实时查询手机完整规格 — 130+ 款主流机型，24 品牌，38 字段结构化数据</p>
+  <span class="badge">FastAPI</span>
+  <span class="badge">RapidAPI</span>
+  <span class="badge">24 品牌</span>
+  <span class="badge">130+ 机型</span>
+</div>
+
+<div class="container">
+  <div class="stats-grid" id="stats">
+    <div class="stat-card"><div class="num" id="stat-total">...</div><div class="label">手机总数</div></div>
+    <div class="stat-card"><div class="num" id="stat-brands">...</div><div class="label">品牌</div></div>
+    <div class="stat-card"><div class="num" id="stat-version">...</div><div class="label">API 版本</div></div>
+    <div class="stat-card"><div class="num" id="stat-updated">...</div><div class="label">最后更新</div></div>
+  </div>
+
+  <h2 style="color:#fff;margin-top:32px">在线试用</h2>
+  <div class="search-box">
+    <input type="text" id="query" placeholder="输入关键词，如 iPhone、Snapdragon、Samsung、华为..." onkeydown="if(event.key==='Enter')search()">
+    <button onclick="search()">搜索</button>
+  </div>
+
+  <div class="results" id="results"></div>
+
+  <div class="endpoints">
+    <h2>API 端点</h2>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/api/v1/search?q={keyword}</span><span class="desc">全文搜索</span></div>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/api/v1/specs/{phone_id}</span><span class="desc">完整规格</span></div>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/api/v1/compare?id1=..&id2=..</span><span class="desc">双机对比</span></div>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/api/v1/brands</span><span class="desc">品牌列表</span></div>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/api/v1/stats</span><span class="desc">统计信息</span></div>
+    <div class="endpoint"><span class="method">GET</span><span class="path">/docs</span><span class="desc">Swagger UI</span></div>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>开始在 RapidAPI 上使用</h2>
+  <p style="color:#888;margin-bottom:16px">3 种定价方案，从免费到无限调用</p>
+  <a href="https://rapidapi.com" class="btn">查看定价</a>
+  <a href="/docs" class="btn btn-outline">API 文档</a>
+</div>
+
+<footer>
+  <a href="https://github.com/rinehartwang1979/phone-specs-api">GitHub</a> &nbsp;|&nbsp; 
+  <a href="/redoc">ReDoc</a> &nbsp;|&nbsp; 
+  <a href="/api/v1/health">Health API</a>
+</footer>
+
+<script>
+async function init() {
+  try {
+    const r = await fetch('/api/v1/health');
+    const h = await r.json();
+    document.getElementById('stat-total').textContent = h.record_count;
+    document.getElementById('stat-version').textContent = h.version;
+    document.getElementById('stat-updated').textContent = new Date(h.updated_at).toLocaleDateString('zh-CN');
+  } catch(e) { document.getElementById('stat-total').textContent = '130'; }
+
+  try {
+    const r = await fetch('/api/v1/brands');
+    const b = await r.json();
+    document.getElementById('stat-brands').textContent = b.brands.length;
+  } catch(e) { document.getElementById('stat-brands').textContent = '24'; }
+}
+
+async function search() {
+  const q = document.getElementById('query').value.trim();
+  if (!q) return;
+  
+  document.getElementById('results').innerHTML = '<p style="color:#888">搜索中...</p>';
+  
+  try {
+    const r = await fetch(`/api/v1/search?q=${encodeURIComponent(q)}&limit=15`);
+    const d = await r.json();
+    
+    if (d.count === 0) {
+      document.getElementById('results').innerHTML = '<p style="color:#888">未找到结果，尝试其他关键词</p>';
+      return;
+    }
+    
+    let html = `<p style="color:#888;margin-bottom:12px">找到 ${d.count} 款手机</p>`;
+    for (const p of d.results) {
+      html += `<div class="phone-card">
+        <h3><span class="brand">${p.brand}</span> ${p.model_name}</h3>
+        <div class="specs">
+          <div class="spec-item"><strong>芯片</strong>${p.chipset||'N/A'}</div>
+          <div class="spec-item"><strong>屏幕</strong>${p.screen_size||'N/A'} ${p.screen_type||''}</div>
+          <div class="spec-item"><strong>刷新率</strong>${p.refresh_rate||'N/A'}</div>
+          <div class="spec-item"><strong>内存</strong>${p.ram||'N/A'}</div>
+          <div class="spec-item"><strong>存储</strong>${p.storage||'N/A'}</div>
+          <div class="spec-item"><strong>主摄</strong>${p.rear_camera_main||'N/A'}</div>
+          <div class="spec-item"><strong>电池</strong>${p.battery_capacity||'N/A'}</div>
+          <div class="spec-item"><strong>充电</strong>${p.charging_wired||'N/A'}</div>
+          <div class="spec-item"><strong>系统</strong>${p.os||'N/A'}</div>
+          <div class="spec-item"><strong>重量</strong>${p.weight||'N/A'}</div>
+          <div class="spec-item"><strong>5G</strong>${p.network_5g?'是':'否'}</div>
+          <div class="spec-item"><strong>防护</strong>${p.water_resistance||'无'}</div>
+        </div>
+      </div>`;
+    }
+    document.getElementById('results').innerHTML = html;
+  } catch(e) {
+    document.getElementById('results').innerHTML = `<p style="color:#e74c3c">请求失败: ${e.message}</p>`;
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>

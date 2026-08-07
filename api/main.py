@@ -19,7 +19,8 @@ from typing import Optional
 
 from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 # -------- 配置 --------
 DATA_FILE = Path(__file__).parent.parent / "data" / "phones.json"
@@ -40,6 +41,11 @@ app.add_middleware(
     allow_methods=["GET"],
     allow_headers=["*"],
 )
+
+# Static files (demo landing page)
+STATIC_DIR = Path(__file__).parent / "static"
+STATIC_DIR.mkdir(exist_ok=True)
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 # -------- 数据加载（内存缓存） --------
@@ -97,6 +103,14 @@ def search_phones(query: str, limit: int = 20) -> list:
 
 
 # -------- 端点 --------
+@app.get("/")
+async def root():
+    """演示首页"""
+    index_path = STATIC_DIR / "index.html"
+    if index_path.exists():
+        return FileResponse(index_path)
+    return {"message": "Phone Specs API — see /docs for API documentation"}
+
 @app.get("/api/v1/health")
 async def health():
     """健康检查"""
