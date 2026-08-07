@@ -1,4 +1,9 @@
-# Phone Specs API
+# Phone Specs API 🚀
+
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-❤-ea4aaa?logo=github)](https://github.com/sponsors/rinehartwang1979)
+[![RapidAPI](https://img.shields.io/badge/RapidAPI-Listing-0055ff)](https://rapidapi.com/rinehartwang1979/api/phone-specs)](https://rapidapi.com/rinehartwang1979/api/phone-specs)
+[![Railway](https://img.shields.io/badge/Railway-Deployed-0B0D1E?logo=railway)](https://phone-specs-api-production.up.railway.app)
+[![Phones](https://img.shields.io/badge/Phones-164-00d4aa)](https://phone-specs-api-production.up.railway.app/api/v1/stats)
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app)
 
