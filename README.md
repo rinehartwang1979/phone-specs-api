@@ -3,11 +3,12 @@
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-❤-ea4aaa?logo=github)](https://github.com/sponsors/rinehartwang1979)
 [![RapidAPI](https://img.shields.io/badge/RapidAPI-Listing-0055ff)](https://rapidapi.com/rinehartwang1979/api/phone-specs)](https://rapidapi.com/rinehartwang1979/api/phone-specs)
 [![Railway](https://img.shields.io/badge/Railway-Deployed-0B0D1E?logo=railway)](https://phone-specs-api-production.up.railway.app)
-[![Phones](https://img.shields.io/badge/Phones-164-00d4aa)](https://phone-specs-api-production.up.railway.app/api/v1/stats)
+[![Phones](https://img.shields.io/badge/Phones-200-00d4aa)](https://phone-specs-api-production.up.railway.app/api/v1/stats)
+[![Gumroad](https://img.shields.io/badge/Buy_Dataset-$9.99-ff90e8?logo=gumroad)](https://rinehart82.gumroad.com/l/qbqrhi)
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app)
 
-**REST API for smartphone specifications** — 132 phones across 24 brands with 38 field structured schema. Deployed on Railway, distributed via [RapidAPI](https://rapidapi.com).
+**REST API for smartphone specifications** — 200 phones across 24 brands with 38 field structured schema. Deployed on Railway, distributed via [RapidAPI](https://rapidapi.com).
 
 ## Quick Start
 
@@ -173,11 +174,13 @@ MIT
 
 ## Buy the Dataset
 
-Prefer the raw data? Get the complete CSV with all 130+ phones:
+Prefer the raw data? Get the complete CSV with all 200 phones:
 
-- **Format**: CSV (UTF-8), 37 columns, ready for Excel / Pandas / SQL
+- **Format**: CSV (UTF-8), 38 fields, ready for Excel / Pandas / SQL
 - **Fields**: brand, model, chipset, camera specs, battery, display, dimensions, and more
 - **Updates**: free updates for 12 months
 - **Price**: $9.99 one-time
+
+👉 **[Buy on Gumroad](https://rinehart82.gumroad.com/l/qbqrhi)**
 
 📧 Contact via [GitHub Issues](https://github.com/rinehartwang1979/phone-specs-api/issues) for bulk licensing.
