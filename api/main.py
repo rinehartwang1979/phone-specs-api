@@ -217,6 +217,101 @@ async def specs(phone_id: str):
     raise HTTPException(status_code=404, detail=f"Phone not found: {phone_id}")
 
 
+@app.get("/api/v1/releases")
+async def releases(
+    year: Optional[int] = Query(None, description="按年份筛选（如 2024）"),
+    month: Optional[int] = Query(None, ge=1, le=12, description="按月份筛选（1-12）"),
+    brand: Optional[str] = Query(None, description="按品牌筛选"),
+    limit: int = Query(50, ge=1, le=200, description="返回数量"),
+    fields: Optional[str] = Query(None, description="返回字段（逗号分隔），默认全部"),
+):
+    """
+    发布日历 — 按发布时间查询手机
+    
+    示例:
+        /api/v1/releases?year=2024
+        /api/v1/releases?year=2024&month=9
+        /api/v1/releases?brand=Apple
+        /api/v1/releases?year=2025&fields=id,brand,model,launch_date
+    """
+    phones = load_data()
+    results = []
+    for p in phones:
+        ld = p.get("launch_date", "")
+        if not ld:
+            continue
+        if year is not None and ld[:4] != str(year):
+            continue
+        if month is not None and ld[5:7] != f"{month:02d}":
+            continue
+        if brand and brand.lower() not in p.get("brand", "").lower():
+            continue
+        results.append(p)
+    
+    # 按发布日期倒序
+    results.sort(key=lambda x: x.get("launch_date", ""), reverse=True)
+    results = results[:limit]
+    
+    if fields:
+        field_list = [f.strip() for f in fields.split(",")]
+        results = [
+            {k: v for k, v in r.items() if k in field_list or k == "id"}
+            for r in results
+        ]
+    
+    return {
+        "year": year,
+        "month": month,
+        "brand": brand,
+        "count": len(results),
+        "results": results,
+    }
+
+
+@app.get("/api/v1/image/{phone_id}")
+async def image(phone_id: str):
+    """
+    查询手机图片 URL
+    
+    示例:
+        /api/v1/image/apple_iphone16promax
+    """
+    phones = load_data()
+    for p in phones:
+        if p.get("id") == phone_id:
+            img = p.get("image_url", "")
+            if img:
+                return {"found": True, "id": phone_id, "image_url": img}
+            return {"found": True, "id": phone_id, "image_url": None, "note": "No image available"}
+    
+    raise HTTPException(status_code=404, detail=f"Phone not found: {phone_id}")
+
+
+@app.get("/api/v1/price/{phone_id}")
+async def price(phone_id: str):
+    """
+    查询手机价格区间（USD）
+    
+    示例:
+        /api/v1/price/apple_iphone16promax
+    """
+    phones = load_data()
+    for p in phones:
+        if p.get("id") == phone_id:
+            price_data = {
+                "found": True,
+                "id": phone_id,
+                "model_name": p.get("model_name", ""),
+                "price_usd": p.get("price_usd"),
+                "price_range_usd": p.get("price_range_usd"),
+                "currency": "USD",
+                "note": "Approximate retail price range from GSMArena" if p.get("price_range_usd") else "No price data available",
+            }
+            return price_data
+    
+    raise HTTPException(status_code=404, detail=f"Phone not found: {phone_id}")
+
+
 @app.get("/api/v1/compare")
 async def compare(
     id1: str = Query(..., description="第一款手机 ID"),

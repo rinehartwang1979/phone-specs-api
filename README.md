@@ -3,12 +3,12 @@
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-❤-ea4aaa?logo=github)](https://github.com/sponsors/rinehartwang1979)
 [![RapidAPI](https://img.shields.io/badge/RapidAPI-Listing-0055ff)](https://rapidapi.com/rinehartwang1979/api/phone-specs)](https://rapidapi.com/rinehartwang1979/api/phone-specs)
 [![Railway](https://img.shields.io/badge/Railway-Deployed-0B0D1E?logo=railway)](https://phone-specs-api-production.up.railway.app)
-[![Phones](https://img.shields.io/badge/Phones-200-00d4aa)](https://phone-specs-api-production.up.railway.app/api/v1/stats)
+[![Phones](https://img.shields.io/badge/Phones-263-00d4aa)](https://phone-specs-api-production.up.railway.app/api/v1/stats)
 [![Gumroad](https://img.shields.io/badge/Buy_Dataset-$9.99-ff90e8?logo=gumroad)](https://rinehart82.gumroad.com/l/qbqrhi)
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app)
 
-**REST API for smartphone specifications** — 200 phones across 24 brands with 38 field structured schema. Deployed on Railway, distributed via [RapidAPI](https://rapidapi.com).
+**REST API for smartphone specifications** — 263 phones across 29 brands with 38 field structured schema. Deployed on Railway, distributed via [RapidAPI](https://rapidapi.com).
 
 ## Quick Start
 
@@ -41,6 +41,9 @@ curl "https://phone-specs-api-production.up.railway.app/api/v1/health"
 | GET | `/api/v1/specs/{phone_id}` | Detailed specs for one phone |
 | GET | `/api/v1/compare?id1={id}&id2={id}` | Side-by-side comparison |
 | GET | `/api/v1/brands` | All brands with phone counts |
+| GET | `/api/v1/releases?year=2024&month=9` | Release calendar — filter by year/month/brand |
+| GET | `/api/v1/image/{phone_id}` | Phone image URL (GSMArena) |
+| GET | `/api/v1/price/{phone_id}` | Approximate retail price range (USD) |
 | GET | `/api/v1/stats` | Database statistics |
 | GET | `/api/v1/health` | Service health & record count |
 | GET | `/docs` | Interactive Swagger UI |
@@ -174,7 +177,7 @@ MIT
 
 ## Buy the Dataset
 
-Prefer the raw data? Get the complete CSV with all 200 phones:
+Prefer the raw data? Get the complete CSV with all 263 phones:
 
 - **Format**: CSV (UTF-8), 38 fields, ready for Excel / Pandas / SQL
 - **Fields**: brand, model, chipset, camera specs, battery, display, dimensions, and more
