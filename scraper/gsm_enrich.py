@@ -127,7 +127,7 @@ def parse_price(html):
     prices = re.findall(r"&#36;&thinsp;([\d,]+)|&euro;&thinsp;([\d,]+)|\$([\d,]+)", html)
     usd = []
     for m in prices:
-        val = (m[0] or m[2] or "").replace(",", "")
+        val = (m[0] or m[1] or m[2] or "").replace(",", "")
         if val:
             usd.append(int(val))
     if not usd:
